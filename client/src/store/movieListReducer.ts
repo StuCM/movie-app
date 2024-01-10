@@ -5,11 +5,9 @@ export const fetchMovies = createAsyncThunk<Movie[], void>(
     'movieList/fetchMovies',
     async () => {
         try {
-            const response = await fetch('http://localhost:5000/api');
-            console.log(response)
-            const data = await response.json();
-            console.log("fetch movies")
-            return data.movies;
+            const response: Response = await fetch('http://localhost:5000/api');
+            const data: Movie[] = await response.json();
+            return data;
         } catch (error) {
             console.log(error);
             return [];
