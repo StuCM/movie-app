@@ -7,9 +7,10 @@ const app: Application = express();
 app.use(cors());
 
 app.get("/api", async (req: Request, res: Response) => {
+  const searchRequest = req.query.search;
+  console.log("searchRequest", searchRequest)
   try {
-    const response = await axios.get("http://www.omdbapi.com/?s=star wars&apikey=a1b5dc0a");
-    console.log(response.data.Search)
+    const response = await axios.get(`http://www.omdbapi.com/?s=${searchRequest}&apikey=a1b5dc0a`);
     res.json(response.data.Search);
   } catch (error) {
     console.log(error);

@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Movie } from '../types/types';
 
-export const fetchMovies = createAsyncThunk<Movie[], void>(
+export const fetchMovies = createAsyncThunk<Movie[], string>(
     'movieList/fetchMovies',
-    async () => {
+    async (searchRequest) => {
         try {
-            const response: Response = await fetch('http://localhost:5000/api');
+            const response: Response = await fetch(`http://localhost:5000/api?search=${searchRequest}`);
             const data: Movie[] = await response.json();
             return data;
         } catch (error) {

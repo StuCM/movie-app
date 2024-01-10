@@ -7,17 +7,15 @@ import { Movie } from "../types/types";
 const MovieList = () => {
   const dispatch: AppDispatch = useDispatch();
   const movieList = useSelector((state: RootState) => state.movieList);
+  const search = useSelector((state: RootState) => state.search);
   
-
   useEffect(() => {
-    console.log("dispatching fetchMovies")
-    dispatch(fetchMovies());
+    dispatch(fetchMovies(search.value));
   }, [dispatch]);
 
-  console.log(movieList)
   return (
     <div className="movie-list">
-      {movieList.map((movie: Movie) => (
+      {movieList.length > 0 ? movieList.map((movie: Movie) => (
         <div className="movie-container" key={movie.imdbID}>
           <img src={movie.Poster} alt={movie.Title} />
           <div className="movie-info">
@@ -25,7 +23,7 @@ const MovieList = () => {
             <span>{movie.Year}</span>
           </div>
         </div>
-      ))}
+      )) : <h2>No movies found</h2>}
     </div>
   );
 };
