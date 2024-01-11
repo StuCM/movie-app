@@ -3,12 +3,13 @@ import { limiter, cacheMiddleware, cache } from "./middleware";
 import cors from "cors";
 import axios from "axios";
 import { ApiResponse } from "./types";
+require("dotenv").config();
 
 const app: Application = express();
 
 app.use(cors());
 
-const apiKey: string = "a8cb1bc9292c540572ecabcd6b268e0f";
+const apiKey: string = process.env.API_KEY as string;
 
 app.get("/search/:title", limiter, cacheMiddleware, async (req: Request, res: Response) => {
   const searchRequest: string = req.params.title as string;
@@ -41,8 +42,9 @@ app.get("/topRated", limiter, cacheMiddleware, async (req: Request, res: Respons
   }
 });
 
-app.listen(5000, () => {
-  console.log("Server is listening on port 5000");
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
 });
 
 module.exports = app;
