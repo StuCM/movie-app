@@ -1,3 +1,7 @@
+#root {
+  height: 100vh;
+}
+
 .image-container {
   display: flex;
   justify-content: flex-start;
@@ -22,8 +26,23 @@
 	flex-wrap: nowrap;
 }
 
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1rem;
+  text-align: center;
+}
+
+.movie-info h2 {
+  text-align: center;
+}
+
+
 .search-bar {
   text-align: center;
+  margin: 3rem;
 }
 
 .search-bar>input {

@@ -17,14 +17,14 @@ const MovieList = () => {
   return (
     <>
     <Heading search={search.value} />
-    <div className="movie-list">
+    <div className="movie-list" style={{ justifyContent: movieList.length > 0 ? "flex-start" : "center"}}>
       {movieList.length > 0 ? movieList.map((movie: Movie) => (
         <div>
           <div className="image-container">
             <img src={movie.Poster} key={movie.imdbID} alt={movie.Title} />
           </div>
           <div className="movie-info">
-            <h3>{movie.Title}</h3>
+            <p>{movie.Title}</p>
             <span>{movie.Year}</span>
           </div>
         </div>
