@@ -4,6 +4,7 @@ import { fetchMovies } from "../store/movieListReducer"
 import { AppDispatch, RootState } from "../store";
 import { Movie } from "../types/types";
 import Heading from "./Heading";
+import { toggleOpen } from "../store/modalReducer";
 
 const MovieList = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -14,6 +15,8 @@ const MovieList = () => {
     dispatch(fetchMovies(search.value));
   }, [dispatch]);
 
+  const handleClick = (() => (dispatch(toggleOpen())));
+
   return (
     <>
     <Heading search={search.value} />
@@ -21,7 +24,13 @@ const MovieList = () => {
       {movieList.length > 0 ? movieList.map((movie: Movie) => (
         <div>
           <div className="image-container">
-            <img src={movie.Poster} key={movie.imdbID} alt={movie.Title} />
+            <img 
+              src={movie.Poster} 
+              key={movie.imdbID}
+              id={movie.imdbID} 
+              alt={movie.Title} 
+              onClick={handleClick}
+            />
           </div>
           <div className="movie-info">
             <p>{movie.Title}</p>
