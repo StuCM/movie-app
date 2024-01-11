@@ -15,7 +15,7 @@ const MovieList = () => {
     dispatch(fetchMovies(search.value));
   }, [dispatch]);
 
-  const handleClick = ((id:string) => {
+  const handleClick = ((id:number) => {
     dispatch(selectMovie(id))
     dispatch(toggleOpen())
   });
@@ -28,16 +28,16 @@ const MovieList = () => {
         <div>
           <div className="image-container">
             <img 
-              src={movie.Poster} 
-              key={movie.imdbID}
-              id={movie.imdbID} 
-              alt={movie.Title} 
-              onClick={() => handleClick(movie.imdbID)}
+              src={movie.poster_path} 
+              key={movie.id}
+              id={movie.id.toString()} 
+              alt={movie.title} 
+              onClick={() => handleClick(movie.id)}
             />
           </div>
           <div className="movie-info">
-            <p>{movie.Title}</p>
-            <span>{movie.Year}</span>
+            <p>{movie.title}</p>
+            <p>{movie.release_date}</p>
           </div>
         </div>
           

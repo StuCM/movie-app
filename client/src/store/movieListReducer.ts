@@ -6,7 +6,14 @@ export const fetchMovies = createAsyncThunk<Movie[], string>(
     async (searchRequest) => {
         try {
             const response: Response = await fetch(`http://localhost:5000/api?search=${searchRequest}`);
-            const data: Movie[] = await response.json();
+            const jsonResponse = await response.json();
+            const data: Movie[] = jsonResponse.map((movie: any) => ({
+                id: movie.id,
+                title: movie.title,
+                overview: movie.overview,
+                release_date: movie.release_date,
+                poster_path: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+            }));            
             return data;
         } catch (error) {
             console.log(error);
@@ -30,7 +37,7 @@ export const movieListSlice = createSlice({
     initialState,
     reducers: {
         selectMovie: (state, action) => {
-            state.selectedMovie = state.movies.find((movie) => movie.imdbID === action.payload) as Movie ?? null;
+            state.selectedMovie = state.movies.find((movie) => movie.id === action.payload) as Movie ?? null;
         },
     },
     extraReducers: (builder) => {

@@ -30,12 +30,12 @@ const Modal: React.FC = () => {
         <dialog ref={modalRef} className="modal">
             <div className="modal-content">
                 <div className="modal-image">
-                    <img src={movie?.Poster} alt={movie?.Title} />
+                    <img src={movie?.poster_path} alt={movie?.title} />
                 </div>
                 <div className="modal-info">
-                    <h1>{movie?.Title}</h1>
-                    <p>{movie?.Year}</p>
-                    <p>Synopsis</p>
+                    <h2>{movie?.title}</h2>
+                    <h3>Release Date: <span className="release-date">{movie?.release_date}</span></h3>
+                    <p>{movie?.overview}</p>
                 </div>
                 <button onClick={handleClose}>X</button>
             </div>            
