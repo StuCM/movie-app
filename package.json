@@ -11,5 +11,8 @@
     "build:server": "cd server && npm run build",
     "build": "npm run build:client && npm run build:server"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
 }
