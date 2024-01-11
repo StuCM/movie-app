@@ -16,7 +16,7 @@ const Search = () => {
     }
 
     return (
-        <div>
+        <div className="search-bar">
             <input 
             type="text" 
             placeholder="Enter a movie..." 
