@@ -34,8 +34,8 @@ const Modal: React.FC = () => {
                 <div className="modal-info">
                     <h1>{movie?.title}</h1>
                     <hr />
-                    <h2>Release Date: <span className="release-date">{movie?.release_date}</span></h2>
-                    <h2 style={{marginTop: '2.5rem'}}>About</h2>
+                    <h3>Release Date: <span className="release-date">{movie?.release_date}</span></h3>
+                    <h2>About</h2>
                     <p>{movie?.overview}</p>
                 </div>
                 <button onClick={handleClose}>&times;</button>

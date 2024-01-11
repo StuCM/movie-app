@@ -70,9 +70,8 @@
 .modal {
   min-width: 500px;
   max-width: 60%;
-  background: #e6e6e6;
+  background: #f4f4f4;
   border-radius: 0.5rem;
-  border: 3px solid #598631;
   position: relative;
 }
 
