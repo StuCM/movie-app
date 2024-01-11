@@ -1,34 +1,33 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application, Request, RequestHandler, Response } from "express";
+import rateLimit from "express-rate-limit";
 import cors from "cors";
 import axios from "axios";
+import { ApiResponse, Cache } from "./types";
 
 const app: Application = express();
 
 app.use(cors());
 
-interface Cache {
-  [key: string]: {
-    time: number;
-    data: any;
-  };
-}
+const limiter: RequestHandler = rateLimit({
+  windowMs: 1000 * 60 * 60, // 1 hour
+  max: 100, // limit each IP to 100 requests per windowMs
+});
 
 const cache: Cache = {}; 
 
-app.get("/api", async (req: Request, res: Response) => {
-  const searchRequest = req.query.search;
-  const apiKey = "a8cb1bc9292c540572ecabcd6b268e0f";
+app.get("/api", limiter, async (req: Request, res: Response) => {
+  const searchRequest: string = req.query.search as string;
+  const apiKey: string = "a8cb1bc9292c540572ecabcd6b268e0f";
 
-  console.log(cache[searchRequest as string]?.time > Date.now() - 1000 * 60 * 60 * 24, cache)
-  
-  if (cache[searchRequest as string]?.time > Date.now() - 1000 * 60 * 60 * 24) {
+  //check if the search is in cache and not older than a day  
+  if (cache[searchRequest]?.time > Date.now() - 1000 * 60 * 60 * 24) {
     return res.json(cache[searchRequest as string].data);
   }
 
   try {
-    const response = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${searchRequest}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`);
+    const response: ApiResponse = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${searchRequest}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`);
     
-    cache[searchRequest as string] = {time: Date.now(), data: response.data.results};
+    cache[searchRequest] = {time: Date.now(), data: response.data.results};
     
     res.json(response.data.results);
 
