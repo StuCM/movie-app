@@ -2,13 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { toggleOpen } from "../store/modalReducer";
 import { useEffect, useRef } from "react";
+import { MovieType } from "../types/types"; 
 
 
 const Modal: React.FC = () => {
     const dispatch = useDispatch();
     const isOpen = useSelector((state: RootState) => state.modal.isOpen);
     const modalRef = useRef<HTMLDialogElement>(null);
-    const movie = useSelector((state: RootState) => state.movieList.selectedMovie);
+    const movie: MovieType | null = useSelector((state: RootState) => state.movieList.selectedMovie);
 
     const handleClose = () => {
         dispatch(toggleOpen());

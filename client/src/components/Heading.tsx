@@ -3,7 +3,7 @@ import { RootState } from "../store";
 
 
 
-const Heading = () => {
+const Heading: React.FC = () => {
     const search = useSelector((state: RootState) => state.search);
     return (
         <div className="heading">

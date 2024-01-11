@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies, fetchTopRatedMovies, selectMovie } from "../store/movieListReducer"
 import { AppDispatch, RootState } from "../store";
-import { MovieType } from "../types/types";
+import { MovieListState, MovieType } from "../types/types";
 import Heading from "./Heading";
 import { toggleOpen } from "../store/modalReducer";
 import { useDraggable } from "react-use-draggable-scroll";
@@ -10,7 +10,7 @@ import Movie from "./Movie";
 
 const MovieList = () => {
   const dispatch: AppDispatch = useDispatch();
-  const movieList = useSelector((state: RootState) => state.movieList);
+  const movieList: MovieListState = useSelector((state: RootState) => state.movieList);
   const search = useSelector((state: RootState) => state.search);
   const ref = useRef<HTMLDivElement>(null) as React.MutableRefObject<HTMLDivElement>;
   const { events } = useDraggable(ref, {
@@ -23,7 +23,7 @@ const MovieList = () => {
     } else {
       dispatch(fetchMovies(search.value))
     }
-  }, [dispatch]);
+  }, [search.value]);
 
   const handleClick = ((id:number) => {
     dispatch(selectMovie(id))

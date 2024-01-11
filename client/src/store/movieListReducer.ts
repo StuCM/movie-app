@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { MovieType } from '../types/types';
+import { MovieListState, MovieType } from '../types/types';
 
 export const fetchMovies = createAsyncThunk<MovieType[], string>(
     'movieList/fetchMovies',
@@ -47,11 +47,6 @@ export const fetchTopRatedMovies = createAsyncThunk<MovieType[]>(
         }
     }
 );
-
-interface MovieListState {
-    movies: MovieType[];
-    selectedMovie: MovieType | null;
-}
 
 const initialState: MovieListState = {
     movies: [],
