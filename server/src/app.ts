@@ -26,10 +26,10 @@ app.get("/search/:title", limiter, cacheMiddleware, async (req: Request, res: Re
   }
 });
 
-app.get("/search/:topRated", limiter, cacheMiddleware, async (req: Request, res: Response) => {
+app.get("/topRated", limiter, cacheMiddleware, async (req: Request, res: Response) => {
 
   try {
-    const response: ApiResponse = await axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=en-US&page=1`);
+    const response: ApiResponse = await axios.get(`https://api.themoviedb.org/3/movie/top_rated?&language=en-US&page=1&api_key=${apiKey}`);
 
     cache["topRatedMovies"] = {time: Date.now(), data: response.data.results};
 

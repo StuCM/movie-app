@@ -7,7 +7,6 @@ export const fetchMovies = createAsyncThunk<Movie[], string>(
         try {
             if(searchRequest === '') return [];
             const response: Response = await fetch(`/search/${searchRequest}`);
-            console.log(response)
             const jsonResponse = await response.json();
             const data: Movie[] = jsonResponse
                 .filter((movie: any) => movie.poster_path !== null)
@@ -18,6 +17,29 @@ export const fetchMovies = createAsyncThunk<Movie[], string>(
                     release_date: new Date(movie.release_date).toLocaleString('en-UK', { day: 'numeric', month: 'short', year: 'numeric' }),
                     poster_path: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
             }));            
+            return data;
+        } catch (error) {
+            console.log(error);
+            return [];
+        }
+    }
+);
+
+export const fetchTopRatedMovies = createAsyncThunk<Movie[]>(
+    'movieList/fetchTopRatedMovies',
+    async () => {
+        try {
+            const response: Response = await fetch(`/topRated/`);
+            const jsonResponse = await response.json();
+            const data: Movie[] = jsonResponse
+                .filter((movie: any) => movie.poster_path !== null)
+                .map((movie: any) => ({
+                    id: movie.id,
+                    title: movie.title,
+                    overview: movie.overview,
+                    release_date: new Date(movie.release_date).toLocaleString('en-UK', { day: 'numeric', month: 'short', year: 'numeric' }),
+                    poster_path: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+            }));           
             return data;
         } catch (error) {
             console.log(error);
@@ -45,9 +67,13 @@ export const movieListSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchMovies.fulfilled, (state, action) => {
-            state.movies = action.payload;
-        });
+        builder
+            .addCase(fetchMovies.fulfilled, (state, action) => {
+                state.movies = action.payload;
+            })
+            .addCase(fetchTopRatedMovies.fulfilled, (state, action) => {
+                state.movies = action.payload;
+            })
     },
 });
 
