@@ -44,3 +44,5 @@ app.get("/topRated", limiter, cacheMiddleware, async (req: Request, res: Respons
 app.listen(5000, () => {
   console.log("Server is listening on port 5000");
 });
+
+module.exports = app;
