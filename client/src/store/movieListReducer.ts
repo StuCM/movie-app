@@ -15,23 +15,31 @@ export const fetchMovies = createAsyncThunk<Movie[], string>(
     }
 );
 
-const initialState: Movie[] = [];
+interface MovieListState {
+    movies: Movie[];
+    selectedMovie: Movie | null;
+}
+
+const initialState: MovieListState = {
+    movies: [],
+    selectedMovie: null,
+};
 
 export const movieListSlice = createSlice({
     name: 'movieList',
     initialState,
     reducers: {
-        resetMovieList: (state) => {
-            state.length = 0;
-        }
+        selectMovie: (state, action) => {
+            state.selectedMovie = state.movies.find((movie) => movie.imdbID === action.payload) as Movie ?? null;
+        },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchMovies.fulfilled, (_state, action) => {
-            return action.payload;
+        builder.addCase(fetchMovies.fulfilled, (state, action) => {
+            state.movies = action.payload;
         });
     },
 });
 
-export const { resetMovieList } = movieListSlice.actions;
+export const { selectMovie } = movieListSlice.actions;
 
 export const movieListReducer = movieListSlice.reducer;

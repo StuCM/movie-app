@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies } from "../store/movieListReducer"
+import { fetchMovies, selectMovie } from "../store/movieListReducer"
 import { AppDispatch, RootState } from "../store";
 import { Movie } from "../types/types";
 import Heading from "./Heading";
@@ -15,13 +15,16 @@ const MovieList = () => {
     dispatch(fetchMovies(search.value));
   }, [dispatch]);
 
-  const handleClick = (() => (dispatch(toggleOpen())));
+  const handleClick = ((id:string) => {
+    dispatch(selectMovie(id))
+    dispatch(toggleOpen())
+  });
 
   return (
     <>
     <Heading search={search.value} />
-    <div className="movie-list" style={{ justifyContent: movieList.length > 0 ? "flex-start" : "center"}}>
-      {movieList.length > 0 ? movieList.map((movie: Movie) => (
+    <div className="movie-list" style={{ justifyContent: movieList.movies.length > 0 ? "flex-start" : "center"}}>
+      {movieList.movies.length > 0 ? movieList.movies.map((movie: Movie) => (
         <div>
           <div className="image-container">
             <img 
@@ -29,7 +32,7 @@ const MovieList = () => {
               key={movie.imdbID}
               id={movie.imdbID} 
               alt={movie.Title} 
-              onClick={handleClick}
+              onClick={() => handleClick(movie.imdbID)}
             />
           </div>
           <div className="movie-info">

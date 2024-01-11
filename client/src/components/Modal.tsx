@@ -8,6 +8,8 @@ const Modal: React.FC = () => {
     const dispatch = useDispatch();
     const isOpen = useSelector((state: RootState) => state.modal.isOpen);
     const modalRef = useRef<HTMLDialogElement>(null);
+    const movie = useSelector((state: RootState) => state.movieList.selectedMovie);
+    console.log(movie);
 
     const handleClose = () => {
         dispatch(toggleOpen());
@@ -28,11 +30,11 @@ const Modal: React.FC = () => {
         <dialog ref={modalRef} className="modal">
             <div className="modal-content">
                 <div className="modal-image">
-                    <img src="" alt="" />
+                    <img src={movie?.Poster} alt={movie?.Title} />
                 </div>
                 <div className="modal-info">
-                    <h1>Movie Title</h1>
-                    <p>Year</p>
+                    <h1>{movie?.Title}</h1>
+                    <p>{movie?.Year}</p>
                     <p>Synopsis</p>
                 </div>
                 <button onClick={handleClose}>X</button>
