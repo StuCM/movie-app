@@ -15,13 +15,13 @@ const limiter: RequestHandler = rateLimit({
 
 const cache: Cache = {}; 
 
-app.get("/api", limiter, async (req: Request, res: Response) => {
-  const searchRequest: string = req.query.search as string;
+app.get("/search/:title", limiter, async (req: Request, res: Response) => {
+  const searchRequest: string = req.params.title as string;
   const apiKey: string = "a8cb1bc9292c540572ecabcd6b268e0f";
 
   //check if the search is in cache and not older than a day  
   if (cache[searchRequest]?.time > Date.now() - 1000 * 60 * 60 * 24) {
-    return res.json(cache[searchRequest as string].data);
+    return res.json(cache[searchRequest].data);
   }
 
   try {
