@@ -1,30 +1,34 @@
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store";
 import { setSearch } from "../store/searchReducer";
-import { fetchMovies } from "../store/movieListReducer";
+import { fetchMovies, fetchTopRatedMovies } from "../store/movieListReducer";
+import { FormEvent, useRef } from "react";
 
 const Search = () => {
     const dispatch: AppDispatch = useDispatch();
-    const search = useSelector((state: RootState) => state.search);
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setSearch(e.target.value));
-    }
-
-    const handleSubmit = () => {
-        dispatch(fetchMovies(search.value));
+    const handleSubmit = (e:FormEvent) => {
+        e.preventDefault();
+        const searchValue:string = inputRef.current?.value as string;
+        if(searchValue) {
+            dispatch(setSearch(searchValue));
+            dispatch(fetchMovies(searchValue));
+        } else {
+            dispatch(setSearch(''));
+            dispatch(fetchTopRatedMovies());
+        }
     }
 
     return (
-        <div className="search-bar">
+        <form className="search-bar" onSubmit={handleSubmit}>
             <input 
+            ref={inputRef}
             type="text" 
             placeholder="Enter a movie..." 
-            value={search.value}
-            onChange={handleChange}
             />
-            <button onClick={handleSubmit}>Search</button>
-        </div>
+            <button type="submit">Search</button>
+        </form>
     )
 };
 export default Search;
