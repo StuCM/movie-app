@@ -2,10 +2,11 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies, fetchTopRatedMovies, selectMovie } from "../store/movieListReducer"
 import { AppDispatch, RootState } from "../store";
-import { Movie } from "../types/types";
+import { MovieType } from "../types/types";
 import Heading from "./Heading";
 import { toggleOpen } from "../store/modalReducer";
 import { useDraggable } from "react-use-draggable-scroll";
+import Movie from "./Movie";
 
 const MovieList = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -36,23 +37,8 @@ const MovieList = () => {
       {...events}
       ref={ref}
     >
-      {movieList.movies.length > 0 ? movieList.movies.map((movie: Movie) => (
-        <div key={movie.id}>
-          <div className="image-container">
-            <img 
-              src={movie.poster_path} 
-              id={movie.id.toString()} 
-              alt={movie.title} 
-              onClick={() => handleClick(movie.id)}
-              draggable={false}
-            />
-          </div>
-          <div className="movie-info">
-            <p>{movie.title}</p>
-
-            <p>{movie.release_date}</p>
-          </div>
-        </div>
+      {movieList.movies.length > 0 ? movieList.movies.map((movie: MovieType) => (
+        <Movie movie={movie} handleClick={handleClick} key={movie.id} />
           
       )) : <h2>No movies found</h2>}
     </div>

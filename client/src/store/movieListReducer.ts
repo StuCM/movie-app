@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Movie } from '../types/types';
+import { MovieType } from '../types/types';
 
-export const fetchMovies = createAsyncThunk<Movie[], string>(
+export const fetchMovies = createAsyncThunk<MovieType[], string>(
     'movieList/fetchMovies',
     async (searchRequest) => {
         try {
             if(searchRequest === '') return [];
             const response: Response = await fetch(`/search/${searchRequest}`);
             const jsonResponse = await response.json();
-            const data: Movie[] = jsonResponse
+            const data: MovieType[] = jsonResponse
                 .filter((movie: any) => movie.poster_path !== null)
                 .map((movie: any) => ({
                     id: movie.id,
@@ -25,13 +25,13 @@ export const fetchMovies = createAsyncThunk<Movie[], string>(
     }
 );
 
-export const fetchTopRatedMovies = createAsyncThunk<Movie[]>(
+export const fetchTopRatedMovies = createAsyncThunk<MovieType[]>(
     'movieList/fetchTopRatedMovies',
     async () => {
         try {
             const response: Response = await fetch(`/topRated/`);
             const jsonResponse = await response.json();
-            const data: Movie[] = jsonResponse
+            const data: MovieType[] = jsonResponse
                 .filter((movie: any) => movie.poster_path !== null)
                 .map((movie: any) => ({
                     id: movie.id,
@@ -49,8 +49,8 @@ export const fetchTopRatedMovies = createAsyncThunk<Movie[]>(
 );
 
 interface MovieListState {
-    movies: Movie[];
-    selectedMovie: Movie | null;
+    movies: MovieType[];
+    selectedMovie: MovieType | null;
 }
 
 const initialState: MovieListState = {
@@ -63,7 +63,7 @@ export const movieListSlice = createSlice({
     initialState,
     reducers: {
         selectMovie: (state, action) => {
-            state.selectedMovie = state.movies.find((movie) => movie.id === action.payload) as Movie ?? null;
+            state.selectedMovie = state.movies.find((movie) => movie.id === action.payload) as MovieType ?? null;
         },
     },
     extraReducers: (builder) => {

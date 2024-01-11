@@ -70,9 +70,9 @@
 .modal {
   min-width: 500px;
   max-width: 60%;
-  background: #fff;
+  background: #e6e6e6;
   border-radius: 0.5rem;
-  border: none;
+  border: 3px solid #598631;
   position: relative;
 }
 
@@ -93,9 +93,10 @@
   top: 0;
   right: 0;
   font-size: 2rem;
-  margin: 1rem 1.5rem;
+  margin: 0.5rem 1.5rem;
   background: none;
   padding: 0;
+  color: black;
 }
 
 .modal-content button:hover {
