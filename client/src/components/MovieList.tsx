@@ -22,14 +22,13 @@ const MovieList = () => {
 
   return (
     <>
-    <Heading search={search.value} />
+    <Heading />
     <div className="movie-list" style={{ justifyContent: movieList.movies.length > 0 ? "flex-start" : "center"}}>
       {movieList.movies.length > 0 ? movieList.movies.map((movie: Movie) => (
-        <div>
+        <div key={movie.id}>
           <div className="image-container">
             <img 
               src={movie.poster_path} 
-              key={movie.id}
               id={movie.id.toString()} 
               alt={movie.title} 
               onClick={() => handleClick(movie.id)}

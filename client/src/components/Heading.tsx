@@ -1,9 +1,4 @@
-interface HeadingProps {
-    search: string;
-
-}
-
-const Heading = ({ search }: HeadingProps) => {
+const Heading = () => {
     return (
         <div className="heading">
             <h1>Movies</h1>
