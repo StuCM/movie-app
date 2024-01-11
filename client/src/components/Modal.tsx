@@ -32,9 +32,10 @@ const Modal: React.FC = () => {
                     <img src={movie?.poster_path} alt={movie?.title} />
                 </div>
                 <div className="modal-info">
-                    <h2>{movie?.title}</h2>
-                    <h3>Release Date: <span className="release-date">{movie?.release_date}</span></h3>
-                    <h3>About</h3>
+                    <h1>{movie?.title}</h1>
+                    <hr />
+                    <h2>Release Date: <span className="release-date">{movie?.release_date}</span></h2>
+                    <h2>About</h2>
                     <p>{movie?.overview}</p>
                 </div>
                 <button onClick={handleClose}>&times;</button>

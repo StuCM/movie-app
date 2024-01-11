@@ -1,34 +1,38 @@
-import express, { Application, Request, RequestHandler, Response } from "express";
-import rateLimit from "express-rate-limit";
+import express, { Application, Request, Response } from "express";
+import { limiter, cacheMiddleware, cache } from "./middleware";
 import cors from "cors";
 import axios from "axios";
-import { ApiResponse, Cache } from "./types";
+import { ApiResponse } from "./types";
 
 const app: Application = express();
 
 app.use(cors());
 
-const limiter: RequestHandler = rateLimit({
-  windowMs: 1000 * 60 * 60, // 1 hour
-  max: 100, // limit each IP to 100 requests per windowMs
-});
+const apiKey: string = "a8cb1bc9292c540572ecabcd6b268e0f";
 
-const cache: Cache = {}; 
-
-app.get("/search/:title", limiter, async (req: Request, res: Response) => {
+app.get("/search/:title", limiter, cacheMiddleware, async (req: Request, res: Response) => {
   const searchRequest: string = req.params.title as string;
-  const apiKey: string = "a8cb1bc9292c540572ecabcd6b268e0f";
-
-  //check if the search is in cache and not older than a day  
-  if (cache[searchRequest]?.time > Date.now() - 1000 * 60 * 60 * 24) {
-    return res.json(cache[searchRequest].data);
-  }
 
   try {
     const response: ApiResponse = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${searchRequest}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`);
     
     cache[searchRequest] = {time: Date.now(), data: response.data.results};
     
+    res.json(response.data.results);
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({error: "An error occurred fetching the data"});
+  }
+});
+
+app.get("/search/:topRated", limiter, cacheMiddleware, async (req: Request, res: Response) => {
+
+  try {
+    const response: ApiResponse = await axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=en-US&page=1`);
+
+    cache["topRatedMovies"] = {time: Date.now(), data: response.data.results};
+
     res.json(response.data.results);
 
   } catch (error) {
