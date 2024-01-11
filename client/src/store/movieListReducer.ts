@@ -6,7 +6,7 @@ export const fetchMovies = createAsyncThunk<MovieType[], string>(
     async (searchRequest) => {
         try {
             if(searchRequest === '') return [];
-            const response: Response = await fetch(`/search/${searchRequest}`);
+            const response: Response = await fetch(`/api/search/${searchRequest}`);
             const jsonResponse = await response.json();
             const data: MovieType[] = jsonResponse
                 .filter((movie: any) => movie.poster_path !== null)
@@ -29,7 +29,7 @@ export const fetchTopRatedMovies = createAsyncThunk<MovieType[]>(
     'movieList/fetchTopRatedMovies',
     async () => {
         try {
-            const response: Response = await fetch(`/topRated/`);
+            const response: Response = await fetch(`/api/topRated`);
             const jsonResponse = await response.json();
             const data: MovieType[] = jsonResponse
                 .filter((movie: any) => movie.poster_path !== null)
