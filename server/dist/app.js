@@ -11,7 +11,7 @@ require("dotenv").config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 const apiKey = process.env.API_KEY;
-app.get("/search/:title", middleware_1.limiter, middleware_1.cacheMiddleware, async (req, res) => {
+app.get("/api/search/:title", middleware_1.limiter, middleware_1.cacheMiddleware, async (req, res) => {
     const searchRequest = req.params.title;
     try {
         const response = await axios_1.default.get(`https://api.themoviedb.org/3/search/movie?query=${searchRequest}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`);
@@ -23,7 +23,7 @@ app.get("/search/:title", middleware_1.limiter, middleware_1.cacheMiddleware, as
         res.status(500).json({ error: "An error occurred fetching the data" });
     }
 });
-app.get("/topRated", middleware_1.limiter, middleware_1.cacheMiddleware, async (req, res) => {
+app.get("/api/topRated", middleware_1.limiter, middleware_1.cacheMiddleware, async (req, res) => {
     try {
         const response = await axios_1.default.get(`https://api.themoviedb.org/3/movie/top_rated?&language=en-US&page=1&api_key=${apiKey}`);
         middleware_1.cache["topRatedMovies"] = { time: Date.now(), data: response.data.results };

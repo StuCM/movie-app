@@ -11,7 +11,7 @@ app.use(cors());
 
 const apiKey: string = process.env.API_KEY as string;
 
-app.get("/search/:title", limiter, cacheMiddleware, async (req: Request, res: Response) => {
+app.get("/api/search/:title", limiter, cacheMiddleware, async (req: Request, res: Response) => {
   const searchRequest: string = req.params.title as string;
 
   try {
@@ -27,7 +27,7 @@ app.get("/search/:title", limiter, cacheMiddleware, async (req: Request, res: Re
   }
 });
 
-app.get("/topRated", limiter, cacheMiddleware, async (req: Request, res: Response) => {
+app.get("/api/topRated", limiter, cacheMiddleware, async (req: Request, res: Response) => {
 
   try {
     const response: ApiResponse = await axios.get(`https://api.themoviedb.org/3/movie/top_rated?&language=en-US&page=1&api_key=${apiKey}`);
