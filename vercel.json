@@ -2,12 +2,14 @@
     "version": 2,
     "builds": [
         {
-            "src": "/client/dist/$1",
-            "use": "@vercel/node"
+            "src": "/client/",
+            "use": "@vercel/static-build",
+            "config": {"buildCommand": "npm run build"}
         },
         {
-            "src": "/server/dist/app.js",
-            "use": "@vercel/node"
+            "src": "/server/",
+            "use": "@vercel/static-build",
+            "config": {"buildCommand": "npm run build"}
         }
     ],
     "routes": [
