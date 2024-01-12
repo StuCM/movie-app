@@ -34,13 +34,13 @@ Global
 
 If this does not work, you can navigate to the client and server directory independently and run the same command
 
-# Live Preview
-
-To see the app go to https://movie-app-pi-pink.vercel.app/ 
-
 Frontend will run on http://localhost:5173
 
 Backend will run on http://localhost:5000
+
+# Live Preview
+
+To see the app go to https://movie-app-pi-pink.vercel.app/ 
 
 ## Available Scripts
 
