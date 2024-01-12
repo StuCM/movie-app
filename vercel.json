@@ -7,7 +7,7 @@
             "config": {"buildCommand": "npm run build"}
         },
         {
-            "src": "/server/package.json",
+            "src": "/server/dist/app.js",
             "use": "@vercel/static-build",
             "config": {"buildCommand": "npm run build"}
         }
