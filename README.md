@@ -23,10 +23,13 @@ Then to start both backend and frontend concurrently:
 ```npm run dev```
 
 You may need to install concurrently for this to work
+
 Local
+
 ```npm i -D concurrently```
 
 Global
+
 ```npm i -g concurrently```
 
 If this does not work, you can navigate to the client and server directory independently and run the same command
