@@ -24,6 +24,10 @@ Then to start both backend and frontend concurrently:
 
 If this does not work, you can navigate to the client and server directory independently and run the same command
 
+# Live Preview
+
+To see the app go to https://movie-app-pi-pink.vercel.app/ 
+
 ## Available Scripts
 
 In the project directory, you can run:
