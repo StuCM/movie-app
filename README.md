@@ -22,7 +22,18 @@ Then to start both backend and frontend concurrently:
 
 ```npm run dev```
 
+You may need to install concurrently for this to work
+Local
+```npm i -D concurrently```
+
+Global
+```npm i -g concurrently```
+
 If this does not work, you can navigate to the client and server directory independently and run the same command
+
+Frontend will run on http://localhost:5137
+
+Backend will run on http://localhost:5000
 
 ## Available Scripts
 
@@ -31,7 +42,7 @@ In the project directory, you can run:
 ### `npm run dev`
 
 Runs both the client and server in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view the client in the browser. The server will run on [http://localhost:5000](http://localhost:5000) or another port if specified.
+Open [http://localhost:5137](http://localhost:5137) to view the client in the browser. The server will run on [http://localhost:5000](http://localhost:5000) or another port if specified.
 
 The page will reload if you make edits in the `client` directory.\
 You will also see any lint errors in the console.
